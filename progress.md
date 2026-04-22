@@ -2,8 +2,8 @@
 
 ## Implementation Order
 1. [DONE] Scaffold Next.js + Tailwind + shadcn/ui
-2. [ ] Set up Supabase project, enable pgvector, run schema
-3. [ ] Build lib/schema.ts, lib/gemini.ts, lib/pdf.ts — verify extraction
+2. [DONE] Set up Supabase project, enable pgvector, run schema
+3. [DONE] Build lib/schema.ts, lib/gemini.ts, lib/pdf.ts — verify extraction
 4. [ ] Build upload API route
 5. [ ] Build home page UI
 6. [ ] Build contract detail page UI (without chat)
@@ -12,32 +12,72 @@
 9. [ ] Build eval suite
 10. [ ] Polish UI, write README, deploy
 
-## Current Step: 2 — Supabase + pgvector (PENDING user action)
+## Current Step: 4 — Upload API route
 
 ### Decisions Log
-- Stack locked: Next.js 14 App Router, TS strict, Tailwind, shadcn/ui,
-  Supabase + pgvector, Gemini (2.0-flash-exp + text-embedding-004),
-  pdf-parse, Zod, Vercel AI SDK.
-- shadcn/ui installed manually (components.json written, base components
-  generated directly). No shadcn CLI invoked to avoid interactive prompts.
-- `app/globals.css` uses shadcn HSL CSS variables. Tailwind config
-  extended with shadcn tokens + `tailwindcss-animate`.
-- `@/*` path alias already in tsconfig.
+- Stack: Next.js 14 App Router, TS strict, Tailwind, shadcn/ui,
+  Supabase + pgvector, Gemini, pdf-parse v2, Zod, Vercel AI SDK.
+- **Model swap (deviation from spec):** spec named
+  `gemini-2.0-flash-exp`, which Google retired. `gemini-2.0-flash`
+  and `gemini-2.0-flash-lite` both return 429 with
+  `free_tier_requests limit: 0` on this account. `gemini-2.5-flash`
+  returned 503 under load. `gemini-2.5-flash-lite` is reliable and
+  strictly newer than what the spec asked for. Name is the only thing
+  that needs to change to upgrade later — see the comment at
+  `MODEL_NAME` in `lib/gemini.ts`.
+- **Embedding model swap (for step 8):** `text-embedding-004` is not
+  listed on this API key. Available embedding models are
+  `gemini-embedding-001` (default 3072-dim) and
+  `gemini-embedding-2-preview`. Plan: use `gemini-embedding-001` with
+  `outputDimensionality: 768` to match the existing `vector(768)`
+  column.
+- pdf-parse v2 API: `new PDFParse({ data }).getText()`. Wrapped in
+  `lib/pdf.ts` with `.destroy()` cleanup.
+- shadcn/ui installed manually (no CLI).
+- `@/*` path alias in tsconfig.
+- **Transient-error handling:** the extractor currently fails fast on
+  model-call failures (network / 503 / 429). Retry-critique is only
+  for schema correctness, not transport. If 503s become routine we
+  may want to wrap transport errors with exponential backoff — note
+  for step 10 polish.
 
 ### Step 1 — Completed
-- Installed shadcn deps: class-variance-authority, clsx, tailwind-merge,
-  tailwindcss-animate, lucide-react, @radix-ui/react-slot,
-  @radix-ui/react-label.
-- Configured shadcn: `tailwind.config.ts`, `app/globals.css`,
-  `lib/utils.ts`, `components.json`.
-- Added base components: `components/ui/{button,card,input,label}.tsx`.
-- Replaced default Next.js landing with ContractLens placeholder at
-  `app/page.tsx`. Updated `app/layout.tsx` metadata.
-- Created `.env.example` with the 4 required vars.
-- Verified: `npx next build` passes (static pages generated, no type or
-  lint errors).
+- shadcn/ui configured; base components added; ContractLens placeholder
+  at `app/page.tsx`; `.env.example` created; `next build` passes.
 
-### Blockers for Step 2
-- Needs user to: create a Supabase project, enable the pgvector
-  extension, and share the three Supabase env vars + GEMINI_API_KEY
-  before the extraction pipeline can be exercised end-to-end.
+### Step 2 — Completed
+- Supabase schema applied (`contracts` + `contract_chunks` +
+  `ivfflat` index + `contract_chunks(contract_id)` btree index).
+- pgvector confirmed enabled.
+- Server-only Supabase client at `lib/supabase.ts` using the service
+  role key. Row types exported.
+
+### Step 3 — Completed
+- `lib/schema.ts`: Zod schema + prompt-facing JSON description +
+  `formatZodIssues()` helper. Single source of truth for the shape.
+- `lib/pdf.ts`: `extractPdfText(buffer)` using pdf-parse v2.
+- `lib/gemini.ts`: `extractContract(documentText, { maxRetries })`
+  implementing the retry-critique loop:
+  1. First call to Gemini (JSON mode + system instruction).
+  2. Parse JSON → log + retry with critique if it fails.
+  3. Zod validate → log + retry with field-targeted critique if it
+     fails.
+  4. Up to 2 retries (3 total attempts). All attempts recorded on the
+     returned `attempts` array.
+  5. On terminal failure, returns `{ success: false, partial,
+     attempts, error }` so callers can surface the last best-effort
+     parse.
+- `scripts/test-extract.ts` standalone runner. Verified with
+  `scripts/sample-lease.txt` (synthetic INR lease). Result: all 10
+  top-level fields populated correctly on first attempt, confidence
+  "high", zero retries, ~3s elapsed. Pipeline confirmed working
+  end-to-end before touching any UI.
+
+### Blockers
+- (none) — ready for step 4 (upload API route).
+
+### Known rough edges (flagged for step 10 polish)
+- Transport errors bypass retry-critique; wrap with exponential
+  backoff once the rest of the app stabilizes.
+- Embedding model output-dimensionality must be set to 768 when we
+  build `lib/embeddings.ts` in step 8.
