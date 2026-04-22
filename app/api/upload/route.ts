@@ -5,6 +5,11 @@ import { computeRiskFlags } from "@/lib/risk-flags";
 import { chunkText, embedAndStoreChunks } from "@/lib/embeddings";
 import { getServerSupabase } from "@/lib/supabase";
 
+// Vercel Hobby allows up to 60s for serverless functions. Gemini extraction
+// with retries can take 15–25s, so we need to declare this explicitly —
+// the default on some Vercel versions is 10s which cuts the request short.
+export const maxDuration = 60;
+
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
 type UploadError = {

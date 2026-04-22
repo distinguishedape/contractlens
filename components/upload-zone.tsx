@@ -34,19 +34,31 @@ export function UploadZone() {
 
       try {
         const res = await fetch("/api/upload", { method: "POST", body: form });
-        const json = await res.json();
+
+        let json: Record<string, unknown> = {};
+        try {
+          json = await res.json();
+        } catch {
+          // Response body wasn't JSON (e.g. timeout cut the connection)
+        }
 
         if (!res.ok) {
           setState({
             status: "error",
-            message: json.details ?? json.error ?? "Upload failed.",
+            message: String(json.details ?? json.error ?? `Server error (${res.status}). Please try again.`),
           });
           return;
         }
 
         router.push(`/contract/${json.id}`);
-      } catch {
-        setState({ status: "error", message: "Network error. Please try again." });
+      } catch (err) {
+        const isTimeout = err instanceof Error && err.name === "AbortError";
+        setState({
+          status: "error",
+          message: isTimeout
+            ? "Request timed out — the PDF may be too large or complex. Please try again."
+            : "Could not reach the server. Check your connection and try again.",
+        });
       }
     },
     [router]
