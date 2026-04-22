@@ -1,12 +1,15 @@
-import { PDFParse } from "pdf-parse";
+import { extractText, getDocumentProxy } from "unpdf";
 
 /**
  * Extract plain text from a PDF buffer.
  *
- * Uses pdf-parse v2 (PDFParse class). Returns the concatenated text across
- * all pages. Page-level text is available on the `TextResult` if we need
- * per-page chunking later, but the current chunker works on the flat
- * string.
+ * Uses `unpdf` — a serverless-friendly fork of pdfjs that runs on Vercel
+ * / Cloudflare Workers without needing DOM polyfills or `@napi-rs/canvas`.
+ *
+ * Previously used `pdf-parse` v2, but it pulls in `pdfjs-dist` which
+ * references `DOMMatrix`, `ImageData`, and `Path2D` at module-load time —
+ * those classes don't exist in Vercel's Node runtime and the import blows
+ * up before any text can be extracted.
  */
 export async function extractPdfText(buffer: Buffer): Promise<string> {
   const uint8 = new Uint8Array(
@@ -14,11 +17,7 @@ export async function extractPdfText(buffer: Buffer): Promise<string> {
     buffer.byteOffset,
     buffer.byteLength
   );
-  const parser = new PDFParse({ data: uint8 });
-  try {
-    const result = await parser.getText();
-    return result.text.trim();
-  } finally {
-    await parser.destroy();
-  }
+  const pdf = await getDocumentProxy(uint8);
+  const { text } = await extractText(pdf, { mergePages: true });
+  return text.trim();
 }
