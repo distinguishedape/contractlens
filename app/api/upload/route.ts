@@ -17,7 +17,21 @@ type UploadError = {
   details?: string;
 };
 
-export async function POST(req: Request): Promise<NextResponse> {
+async function handleUpload(req: Request): Promise<NextResponse> {
+  // ── 0. Fail fast if required env vars are missing ────────────────────────
+  if (!process.env.GEMINI_API_KEY) {
+    return NextResponse.json<UploadError>(
+      { error: "Server misconfiguration", details: "GEMINI_API_KEY is not set" },
+      { status: 500 }
+    );
+  }
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return NextResponse.json<UploadError>(
+      { error: "Server misconfiguration", details: "Supabase env vars are not set" },
+      { status: 500 }
+    );
+  }
+
   // ── 1. Parse the multipart form ──────────────────────────────────────────
   let formData: FormData;
   try {
@@ -82,8 +96,6 @@ export async function POST(req: Request): Promise<NextResponse> {
   const extractionResult = await extractContract(rawText);
 
   if (!extractionResult.success) {
-    // Return 422 with the partial data so the client can surface something
-    // useful rather than a blank error screen.
     return NextResponse.json(
       {
         error: "Extraction failed",
@@ -134,4 +146,19 @@ export async function POST(req: Request): Promise<NextResponse> {
 
   // ── 7. Return the contract ID so the client can redirect ──────────────────
   return NextResponse.json({ id: contractId }, { status: 201 });
+}
+
+// Top-level safety net: any uncaught throw returns JSON (not an HTML error
+// page), so the client always gets a readable error message.
+export async function POST(req: Request): Promise<NextResponse> {
+  try {
+    return await handleUpload(req);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[upload] unhandled error:", err);
+    return NextResponse.json<UploadError>(
+      { error: "Unexpected server error", details: msg },
+      { status: 500 }
+    );
+  }
 }
