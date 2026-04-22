@@ -1,0 +1,441 @@
+{
+  "run_at": "2026-04-22T17:40:40.579Z",
+  "samples_total": 5,
+  "samples_succeeded": 3,
+  "overall_accuracy": 0.5857142857142857,
+  "field_accuracy": {
+    "parties.landlord": 1,
+    "parties.tenant": 1,
+    "parties.guarantor": 1,
+    "dates.start_date": 1,
+    "dates.end_date": 1,
+    "dates.renewal_notice_deadline": 1,
+    "financial_terms.monthly_rent": 1,
+    "financial_terms.security_deposit": 1,
+    "financial_terms.rent_escalation": 1,
+    "notice_period_days": 1,
+    "termination_conditions": 1,
+    "auto_renewal.enabled": 1,
+    "auto_renewal.terms": 1,
+    "governing_law": 0.6666666666666666
+  },
+  "runs": [
+    {
+      "sample": "01-residential-india",
+      "success": true,
+      "attempts": 1,
+      "elapsed_ms": 1628,
+      "overall": 0.9285714285714286,
+      "fields": [
+        {
+          "field": "parties.landlord",
+          "expected": "Sunrise Properties LLC",
+          "actual": "Sunrise Properties LLC",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "parties.tenant",
+          "expected": "Priya Sharma",
+          "actual": "Priya Sharma",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "parties.guarantor",
+          "expected": "Rakesh Sharma",
+          "actual": "Rakesh Sharma",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "dates.start_date",
+          "expected": "2025-02-01",
+          "actual": "2025-02-01",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "dates.end_date",
+          "expected": "2026-01-31",
+          "actual": "2026-01-31",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "dates.renewal_notice_deadline",
+          "expected": null,
+          "actual": null,
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "financial_terms.monthly_rent",
+          "expected": {
+            "amount": 45000,
+            "currency": "INR"
+          },
+          "actual": {
+            "amount": 45000,
+            "currency": "INR"
+          },
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "financial_terms.security_deposit",
+          "expected": {
+            "amount": 90000,
+            "currency": "INR"
+          },
+          "actual": {
+            "amount": 90000,
+            "currency": "INR"
+          },
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "financial_terms.rent_escalation",
+          "expected": {
+            "type": "percentage",
+            "value": 8
+          },
+          "actual": {
+            "type": "percentage",
+            "value": 8
+          },
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "notice_period_days",
+          "expected": 60,
+          "actual": 60,
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "termination_conditions",
+          "expected": [
+            "non-payment of rent for more than 15 days",
+            "material breach of any covenant herein",
+            "use of the Premises for any unlawful purpose"
+          ],
+          "actual": [
+            "non-payment of rent for more than 15 days",
+            "material breach of any covenant herein",
+            "use of the Premises for any unlawful purpose"
+          ],
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "auto_renewal.enabled",
+          "expected": true,
+          "actual": true,
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "auto_renewal.terms",
+          "expected": "Unless either party provides written notice of non-renewal at least 30 days prior to the expiration date, this Agreement shall automatically renew for successive one-year terms on the same terms and conditions, except that the monthly rent shall increase as provided in Section 5.",
+          "actual": "Unless either party provides written notice of non-renewal at least 30 days prior to the expiration date, this Agreement shall automatically renew for successive one-year terms on the same terms and conditions, except that the monthly rent shall increase as provided in Section 5.",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "governing_law",
+          "expected": "State of Karnataka, India",
+          "actual": "the laws of the State of Karnataka, India",
+          "match": false,
+          "score": 0.6097560975609756
+        }
+      ]
+    },
+    {
+      "sample": "02-commercial-usd",
+      "success": true,
+      "attempts": 1,
+      "elapsed_ms": 2356,
+      "overall": 1,
+      "fields": [
+        {
+          "field": "parties.landlord",
+          "expected": "Metro Tower Holdings Inc.",
+          "actual": "Metro Tower Holdings Inc.",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "parties.tenant",
+          "expected": "Northwind Analytics Corp.",
+          "actual": "Northwind Analytics Corp.",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "parties.guarantor",
+          "expected": null,
+          "actual": null,
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "dates.start_date",
+          "expected": "2024-04-01",
+          "actual": "2024-04-01",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "dates.end_date",
+          "expected": "2029-03-31",
+          "actual": "2029-03-31",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "dates.renewal_notice_deadline",
+          "expected": "2028-10-03",
+          "actual": "2028-10-03",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "financial_terms.monthly_rent",
+          "expected": {
+            "amount": 18500,
+            "currency": "USD"
+          },
+          "actual": {
+            "amount": 18500,
+            "currency": "USD"
+          },
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "financial_terms.security_deposit",
+          "expected": {
+            "amount": 37000,
+            "currency": "USD"
+          },
+          "actual": {
+            "amount": 37000,
+            "currency": "USD"
+          },
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "financial_terms.rent_escalation",
+          "expected": {
+            "type": "percentage",
+            "value": 3.5
+          },
+          "actual": {
+            "type": "percentage",
+            "value": 3.5
+          },
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "notice_period_days",
+          "expected": 90,
+          "actual": 90,
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "termination_conditions",
+          "expected": [
+            "failure to pay rent when due and continuing for ten business days after written notice",
+            "assignment or subletting without lessor's prior written consent",
+            "filing of a petition in bankruptcy by or against lessee",
+            "abandonment of the premises for thirty consecutive days"
+          ],
+          "actual": [
+            "failure to pay rent when due and continuing for ten (10) business days after written notice",
+            "assignment or subletting without Lessor's prior written consent",
+            "filing of a petition in bankruptcy by or against Lessee",
+            "abandonment of the Premises for thirty (30) consecutive days"
+          ],
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "auto_renewal.enabled",
+          "expected": false,
+          "actual": false,
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "auto_renewal.terms",
+          "expected": "This Lease does not auto-renew; express written notice of renewal is required.",
+          "actual": "This Lease does not auto-renew; express written notice of renewal is required.",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "governing_law",
+          "expected": "State of California",
+          "actual": "State of California",
+          "match": true,
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sample": "03-short-term-no-renewal",
+      "success": true,
+      "attempts": 1,
+      "elapsed_ms": 1812,
+      "overall": 1,
+      "fields": [
+        {
+          "field": "parties.landlord",
+          "expected": "Harbor View Rentals Pty Ltd",
+          "actual": "Harbor View Rentals Pty Ltd",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "parties.tenant",
+          "expected": "Emma Thompson",
+          "actual": "Emma Thompson",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "parties.guarantor",
+          "expected": null,
+          "actual": null,
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "dates.start_date",
+          "expected": "2025-07-01",
+          "actual": "2025-07-01",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "dates.end_date",
+          "expected": "2025-09-30",
+          "actual": "2025-09-30",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "dates.renewal_notice_deadline",
+          "expected": null,
+          "actual": null,
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "financial_terms.monthly_rent",
+          "expected": {
+            "amount": 3200,
+            "currency": "AUD"
+          },
+          "actual": {
+            "amount": 3200,
+            "currency": "AUD"
+          },
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "financial_terms.security_deposit",
+          "expected": {
+            "amount": 3200,
+            "currency": "AUD"
+          },
+          "actual": {
+            "amount": 3200,
+            "currency": "AUD"
+          },
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "financial_terms.rent_escalation",
+          "expected": {
+            "type": "none",
+            "value": null
+          },
+          "actual": {
+            "type": "none",
+            "value": null
+          },
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "notice_period_days",
+          "expected": 14,
+          "actual": 14,
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "termination_conditions",
+          "expected": [
+            "damage to the premises beyond normal wear",
+            "failure to pay rent when due"
+          ],
+          "actual": [
+            "damage to the Premises beyond normal wear",
+            "failure to pay rent when due"
+          ],
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "auto_renewal.enabled",
+          "expected": false,
+          "actual": false,
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "auto_renewal.terms",
+          "expected": "This Agreement does NOT auto-renew under any circumstances.",
+          "actual": "This Agreement does NOT auto-renew under any circumstances.",
+          "match": true,
+          "score": 1
+        },
+        {
+          "field": "governing_law",
+          "expected": "New South Wales, Australia",
+          "actual": "New South Wales, Australia",
+          "match": true,
+          "score": 1
+        }
+      ]
+    },
+    {
+      "sample": "04-high-ambiguity",
+      "success": false,
+      "error": "Schema validation failed:\n- financial_terms.security_deposit.amount: Invalid input: expected number, received null\n- financial_terms.security_deposit.currency: Invalid input: expected string, received null",
+      "attempts": 3,
+      "elapsed_ms": 6677,
+      "overall": 0,
+      "fields": []
+    },
+    {
+      "sample": "05-minimal-fields",
+      "success": false,
+      "error": "Model call failed: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash-lite\nPlease retry in 17.152783336s. [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.5-flash-lite\"},\"quotaValue\":\"20\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"17s\"}]",
+      "attempts": 2,
+      "elapsed_ms": 1867,
+      "overall": 0,
+      "fields": []
+    }
+  ]
+}

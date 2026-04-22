@@ -45,7 +45,7 @@ export function chunkText(text: string): Chunk[] {
 }
 
 /** Embed a single text string. Returns a 768-dim float array. */
-async function embedText(text: string): Promise<number[]> {
+export async function embedText(text: string): Promise<number[]> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error("GEMINI_API_KEY not set");
 
@@ -61,6 +61,45 @@ async function embedText(text: string): Promise<number[]> {
   });
 
   return result.embedding.values;
+}
+
+export type RetrievedChunk = {
+  id: string;
+  chunkIndex: number;
+  content: string;
+  similarity: number;
+};
+
+/**
+ * Retrieve the top-K most similar chunks for a contract given a query
+ * embedding. Uses the `match_contract_chunks` RPC which encapsulates the
+ * pgvector cosine similarity search — PostgREST can't invoke the `<=>`
+ * operator directly, so the RPC is the clean bridge.
+ */
+export async function searchChunks(
+  contractId: string,
+  queryEmbedding: number[],
+  topK: number = 3
+): Promise<RetrievedChunk[]> {
+  const db = getServerSupabase();
+  const { data, error } = await db.rpc("match_contract_chunks", {
+    query_embedding: queryEmbedding,
+    match_contract_id: contractId,
+    match_count: topK,
+  });
+  if (error) throw new Error(`Vector search failed: ${error.message}`);
+  type Row = {
+    id: string;
+    chunk_index: number;
+    content: string;
+    similarity: number;
+  };
+  return (data ?? []).map((row: Row) => ({
+    id: row.id,
+    chunkIndex: row.chunk_index,
+    content: row.content,
+    similarity: row.similarity,
+  }));
 }
 
 /**

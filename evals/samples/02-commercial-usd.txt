@@ -1,0 +1,35 @@
+COMMERCIAL LEASE AGREEMENT
+
+THIS COMMERCIAL LEASE AGREEMENT (this "Lease") is entered into as of March 1, 2024, by and between Metro Tower Holdings Inc., a Delaware corporation ("Lessor"), and Northwind Analytics Corp., a California corporation ("Lessee").
+
+RECITALS
+Lessor is the owner of certain commercial office space located at 500 Market Street, Suite 1800, San Francisco, CA 94105 (the "Premises"). Lessee desires to lease the Premises from Lessor on the terms set forth below.
+
+ARTICLE 1 - TERM
+The initial term of this Lease shall commence on April 1, 2024 (the "Commencement Date") and shall expire on March 31, 2029 (the "Expiration Date"), unless sooner terminated in accordance with the terms hereof.
+
+ARTICLE 2 - BASE RENT
+Lessee shall pay to Lessor base rent in the amount of Eighteen Thousand Five Hundred United States Dollars (USD 18,500.00) per month, payable in advance on the first day of each calendar month.
+
+ARTICLE 3 - SECURITY DEPOSIT
+Concurrent with the execution of this Lease, Lessee has deposited with Lessor the sum of USD 37,000 as a security deposit.
+
+ARTICLE 4 - ANNUAL ESCALATION
+Base rent shall increase by three and one-half percent (3.5%) on each anniversary of the Commencement Date.
+
+ARTICLE 5 - NOTICES AND TERMINATION
+Any party may terminate this Lease for cause upon ninety (90) days prior written notice.
+
+ARTICLE 6 - EVENTS OF DEFAULT
+The following shall constitute events of default by Lessee: (i) failure to pay rent when due and continuing for ten (10) business days after written notice; (ii) assignment or subletting without Lessor's prior written consent; (iii) filing of a petition in bankruptcy by or against Lessee; (iv) abandonment of the Premises for thirty (30) consecutive days.
+
+ARTICLE 7 - RENEWAL
+Lessee shall have the option, but not the obligation, to renew this Lease for one additional term of five (5) years by delivering written notice of such election to Lessor no later than one hundred eighty (180) days prior to the Expiration Date. This Lease does not auto-renew; express written notice of renewal is required.
+
+ARTICLE 8 - GOVERNING LAW
+This Lease shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of laws principles.
+
+IN WITNESS WHEREOF, the parties have executed this Lease as of the Effective Date.
+
+LESSOR: Metro Tower Holdings Inc.
+LESSEE: Northwind Analytics Corp.

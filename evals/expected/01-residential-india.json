@@ -1,0 +1,30 @@
+{
+  "parties": {
+    "landlord": "Sunrise Properties LLC",
+    "tenant": "Priya Sharma",
+    "guarantor": "Rakesh Sharma"
+  },
+  "dates": {
+    "start_date": "2025-02-01",
+    "end_date": "2026-01-31",
+    "renewal_notice_deadline": null
+  },
+  "financial_terms": {
+    "monthly_rent": { "amount": 45000, "currency": "INR" },
+    "security_deposit": { "amount": 90000, "currency": "INR" },
+    "rent_escalation": { "type": "percentage", "value": 8 }
+  },
+  "notice_period_days": 60,
+  "termination_conditions": [
+    "non-payment of rent for more than 15 days",
+    "material breach of any covenant herein",
+    "use of the Premises for any unlawful purpose"
+  ],
+  "auto_renewal": {
+    "enabled": true,
+    "terms": "Unless either party provides written notice of non-renewal at least 30 days prior to the expiration date, this Agreement shall automatically renew for successive one-year terms on the same terms and conditions, except that the monthly rent shall increase as provided in Section 5."
+  },
+  "governing_law": "State of Karnataka, India",
+  "extraction_confidence": "high",
+  "ambiguities": []
+}

@@ -1,16 +1,9 @@
 import Link from "next/link";
-import { FileText } from "lucide-react";
+import { FileText, Beaker } from "lucide-react";
 import { getServerSupabase } from "@/lib/supabase";
 import { topRiskLevel, type RiskFlag } from "@/lib/risk-flags";
 import { UploadZone } from "@/components/upload-zone";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 type ContractListItem = {
   id: string;
@@ -56,9 +49,18 @@ export default async function Home() {
   return (
     <main className="container mx-auto max-w-4xl px-6 py-12">
       <header className="mb-10">
-        <div className="flex items-center gap-2 text-sm font-medium text-primary mb-3">
-          <FileText className="h-4 w-4" />
-          ContractLens
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2 text-sm font-medium text-primary">
+            <FileText className="h-4 w-4" />
+            ContractLens
+          </div>
+          <Link
+            href="/evals"
+            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+          >
+            <Beaker className="h-3.5 w-3.5" />
+            Eval results
+          </Link>
         </div>
         <h1 className="text-3xl font-semibold tracking-tight mb-2">
           AI contract intelligence

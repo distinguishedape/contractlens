@@ -1,0 +1,26 @@
+{
+  "parties": {
+    "landlord": "Greenfield Estates",
+    "tenant": "James O'Connor",
+    "guarantor": null
+  },
+  "dates": {
+    "start_date": "2025-06-01",
+    "end_date": "2026-05-31",
+    "renewal_notice_deadline": null
+  },
+  "financial_terms": {
+    "monthly_rent": { "amount": 1850, "currency": "EUR" },
+    "security_deposit": null,
+    "rent_escalation": { "type": "none", "value": null }
+  },
+  "notice_period_days": null,
+  "termination_conditions": [],
+  "auto_renewal": {
+    "enabled": false,
+    "terms": null
+  },
+  "governing_law": "Irish law",
+  "extraction_confidence": "medium",
+  "ambiguities": []
+}

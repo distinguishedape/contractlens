@@ -4,15 +4,15 @@
 1. [DONE] Scaffold Next.js + Tailwind + shadcn/ui
 2. [DONE] Set up Supabase project, enable pgvector, run schema
 3. [DONE] Build lib/schema.ts, lib/gemini.ts, lib/pdf.ts — verify extraction
-4. [ ] Build upload API route
-5. [ ] Build home page UI
-6. [ ] Build contract detail page UI (without chat)
-7. [ ] Add risk flags display
-8. [ ] Build embeddings + RAG chat
-9. [ ] Build eval suite
+4. [DONE] Build upload API route
+5. [DONE] Build home page UI
+6. [DONE] Build contract detail page UI (without chat)
+7. [DONE] Add risk flags display
+8. [DONE] Build embeddings + RAG chat
+9. [DONE] Build eval suite
 10. [ ] Polish UI, write README, deploy
 
-## Current Step: 4 — Upload API route
+## Current Step: 10 — Polish UI, write README, deploy
 
 ### Decisions Log
 - Stack: Next.js 14 App Router, TS strict, Tailwind, shadcn/ui,
@@ -73,8 +73,32 @@
   "high", zero retries, ~3s elapsed. Pipeline confirmed working
   end-to-end before touching any UI.
 
+### Step 9 — Completed
+- `evals/compare.ts`: Levenshtein string similarity (threshold 0.85),
+  ISO date parsing, nullable money equality, greedy set-F1 for
+  `termination_conditions` array. `extraction_confidence` and
+  `ambiguities` excluded from scoring (model self-reports, not ground
+  truth).
+- `evals/run.ts`: scans `evals/samples/` for `.txt`/`.pdf`, pairs with
+  `evals/expected/<name>.json` (validated against `extractionSchema`
+  itself so fixture drift is caught early), runs extraction, writes
+  `evals/report.json`. Runnable as `npx tsx evals/run.ts`.
+- 5 fixtures cover the realistic spread: clean INR residential,
+  commercial USD, short-term no-renewal, heavily ambiguous, and
+  minimal-fields.
+- `app/api/evals/route.ts`: serves the cached `report.json`. Eval
+  runs are NOT triggered on request (tens of seconds + burns quota).
+- `app/evals/page.tsx`: overall accuracy, per-field bars, per-sample
+  detail cards. Force-dynamic so it re-reads the file every render.
+- Link added from home header.
+- **Eval results** (latest run): 3/5 samples clean (92.9–100%), 1
+  genuine model failure on high-ambiguity input (retry loop couldn't
+  nudge Gemini off an invalid nested-null object shape — real signal
+  for the pipeline's limits), 1 sample hit the 20 req/day free-tier
+  quota. The failures are honest; leaving them in the report.
+
 ### Blockers
-- (none) — ready for step 4 (upload API route).
+- (none) — ready for step 10 (README + polish + final deploy).
 
 ### Known rough edges (flagged for step 10 polish)
 - Transport errors bypass retry-critique; wrap with exponential

@@ -1,0 +1,29 @@
+{
+  "parties": {
+    "landlord": "Harbor View Rentals Pty Ltd",
+    "tenant": "Emma Thompson",
+    "guarantor": null
+  },
+  "dates": {
+    "start_date": "2025-07-01",
+    "end_date": "2025-09-30",
+    "renewal_notice_deadline": null
+  },
+  "financial_terms": {
+    "monthly_rent": { "amount": 3200, "currency": "AUD" },
+    "security_deposit": { "amount": 3200, "currency": "AUD" },
+    "rent_escalation": { "type": "none", "value": null }
+  },
+  "notice_period_days": 14,
+  "termination_conditions": [
+    "damage to the premises beyond normal wear",
+    "failure to pay rent when due"
+  ],
+  "auto_renewal": {
+    "enabled": false,
+    "terms": "This Agreement does NOT auto-renew under any circumstances."
+  },
+  "governing_law": "New South Wales, Australia",
+  "extraction_confidence": "high",
+  "ambiguities": []
+}

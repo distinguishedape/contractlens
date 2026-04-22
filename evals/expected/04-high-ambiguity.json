@@ -1,0 +1,32 @@
+{
+  "parties": {
+    "landlord": null,
+    "tenant": null,
+    "guarantor": null
+  },
+  "dates": {
+    "start_date": "2024-11-01",
+    "end_date": null,
+    "renewal_notice_deadline": null
+  },
+  "financial_terms": {
+    "monthly_rent": { "amount": 35000, "currency": "INR" },
+    "security_deposit": null,
+    "rent_escalation": { "type": "none", "value": null }
+  },
+  "notice_period_days": null,
+  "termination_conditions": [],
+  "auto_renewal": {
+    "enabled": true,
+    "terms": "Arrangement continues beyond the initial period unless one party indicates otherwise"
+  },
+  "governing_law": "India",
+  "extraction_confidence": "low",
+  "ambiguities": [
+    "Party names are placeholders",
+    "End date is not specified",
+    "Rent amount is approximate",
+    "Notice period is not defined in days",
+    "Escalation is vague and at owner's discretion"
+  ]
+}

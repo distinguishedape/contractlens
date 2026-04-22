@@ -9,9 +9,7 @@ import {
   DollarSign,
   Users,
   FileText,
-  Gavel,
   RefreshCw,
-  MessageSquare,
 } from "lucide-react";
 import { getServerSupabase } from "@/lib/supabase";
 import { type ExtractedContract } from "@/lib/schema";
@@ -23,6 +21,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ContractChat } from "@/components/contract-chat";
 
 type ContractRow = {
   id: string;
@@ -322,16 +321,8 @@ export default async function ContractPage({
         )}
       </div>
 
-      {/* Chat placeholder — wired in step 8 */}
       <section className="mt-8">
-        <Card className="border-dashed">
-          <CardContent className="flex items-center gap-3 py-6 text-muted-foreground">
-            <MessageSquare className="h-5 w-5 shrink-0" />
-            <p className="text-sm">
-              Chat with this contract — coming in step 8 (RAG pipeline).
-            </p>
-          </CardContent>
-        </Card>
+        <ContractChat contractId={contract.id} />
       </section>
     </main>
   );

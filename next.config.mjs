@@ -1,10 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // pdf-parse v2 pulls in pdfjs-dist which uses Object.defineProperty on
-  // ES module namespaces — incompatible with webpack. Both the top-level
-  // serverExternalPackages and the webpack externals entry are needed to
-  // cover App Router (RSC) routes on Next.js 14.2.
-  serverExternalPackages: ["pdf-parse", "pdfjs-dist"],
+  // ES module namespaces — incompatible with webpack. Both the
+  // experimental.serverComponentsExternalPackages (for App Router RSC /
+  // route handlers on 14.2) and the webpack externals entry are needed.
   webpack: (config, { isServer }) => {
     if (isServer) {
       const existing = config.externals ?? [];
@@ -14,6 +13,7 @@ const nextConfig = {
     return config;
   },
   experimental: {
+    serverComponentsExternalPackages: ["pdf-parse", "pdfjs-dist"],
     serverActions: {
       bodySizeLimit: "10mb",
     },

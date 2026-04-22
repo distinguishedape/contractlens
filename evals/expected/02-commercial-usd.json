@@ -1,0 +1,31 @@
+{
+  "parties": {
+    "landlord": "Metro Tower Holdings Inc.",
+    "tenant": "Northwind Analytics Corp.",
+    "guarantor": null
+  },
+  "dates": {
+    "start_date": "2024-04-01",
+    "end_date": "2029-03-31",
+    "renewal_notice_deadline": "2028-10-03"
+  },
+  "financial_terms": {
+    "monthly_rent": { "amount": 18500, "currency": "USD" },
+    "security_deposit": { "amount": 37000, "currency": "USD" },
+    "rent_escalation": { "type": "percentage", "value": 3.5 }
+  },
+  "notice_period_days": 90,
+  "termination_conditions": [
+    "failure to pay rent when due and continuing for ten business days after written notice",
+    "assignment or subletting without lessor's prior written consent",
+    "filing of a petition in bankruptcy by or against lessee",
+    "abandonment of the premises for thirty consecutive days"
+  ],
+  "auto_renewal": {
+    "enabled": false,
+    "terms": "This Lease does not auto-renew; express written notice of renewal is required."
+  },
+  "governing_law": "State of California",
+  "extraction_confidence": "high",
+  "ambiguities": []
+}
