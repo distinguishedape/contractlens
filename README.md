@@ -1,5 +1,7 @@
 # ContractLens
 
+**Live demo:** [contractlens-gamma.vercel.app](https://contractlens-gamma.vercel.app) · **Walkthrough:** _Loom link coming_ · **Eval report:** [/evals](https://contractlens-gamma.vercel.app/evals)
+
 AI-powered contract intelligence for lease agreements. Upload a PDF, and the app extracts a validated structured summary, flags risk conditions, and lets you chat with the document through a retrieval-grounded chatbot that cites its sources.
 
 Built as a portfolio project to exercise a realistic production-quality LLM pipeline: retry-critique JSON extraction, pgvector RAG with citations, and an eval suite scoring accuracy per field.
