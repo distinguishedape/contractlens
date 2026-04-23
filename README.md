@@ -41,6 +41,16 @@ flowchart LR
   GC -->|stream + chunk citations| U
 ```
 
+## Where I diverged from the spec
+
+Three substitutions during the build; each one called out in code comments at the swap site.
+
+**`gemini-2.0-flash-exp` → `gemini-2.5-flash-lite`.** The -exp preview line was retired; `2.0-flash` is gated to paid quota on new projects (429 with `free_tier_requests limit: 0`); `2.5-flash` was returning 503 "high demand" on free-tier calls. `-lite` is the reliable free-tier surface with the same JSON mode and system-instruction support. One constant to change when capacity stabilises.
+
+**`text-embedding-004` → `gemini-embedding-001` at `outputDimensionality: 768`.** `text-embedding-004` isn't available on the current API key. `gemini-embedding-001` defaults to 3072 dims, but the pgvector column is `vector(768)` (sized for ivfflat index budget and for parity with 004). Passing `outputDimensionality: 768` produces a dimensionally-identical vector — same column, no schema migration.
+
+**`pdf-parse v2` → `unpdf`.** `pdf-parse` transitively depends on `pdfjs-dist`, which references `DOMMatrix`, `ImageData`, `Path2D`, and `@napi-rs/canvas` at module-load time. None of those exist in Vercel's Node serverless runtime, so imports crash before any text is extracted. `unpdf` is a serverless-friendly fork of pdfjs that runs on Vercel/Cloudflare Workers without DOM polyfills. Same text output, clean deploy.
+
 ## Engineering decisions
 
 **Single source of truth for the schema.** `lib/schema.ts` exports both the Zod validator and the JSON-shape description that's dropped into the system prompt. The retry loop uses `formatZodIssues()` to tell the model exactly which paths failed and why — it can't drift from the validator because the validator authored the feedback.

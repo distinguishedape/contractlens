@@ -150,38 +150,63 @@ export default async function EvalsPage() {
         </Card>
       ) : (
         <>
-          <div className="grid gap-4 sm:grid-cols-3 mb-8">
-            <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Overall accuracy</CardDescription>
-                <CardTitle
-                  className={`text-3xl ${pctColor(report.overall_accuracy)}`}
-                >
-                  {fmtPct(report.overall_accuracy)}
-                </CardTitle>
-              </CardHeader>
-            </Card>
-            <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Samples extracted</CardDescription>
-                <CardTitle className="text-3xl">
-                  {report.samples_succeeded}
-                  <span className="text-base font-normal text-muted-foreground">
-                    {" "}
-                    / {report.samples_total}
-                  </span>
-                </CardTitle>
-              </CardHeader>
-            </Card>
-            <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Last run</CardDescription>
-                <CardTitle className="text-sm font-mono">
-                  {new Date(report.run_at).toLocaleString()}
-                </CardTitle>
-              </CardHeader>
-            </Card>
-          </div>
+          {(() => {
+            const successful = report.runs.filter((r) => r.success);
+            const successAcc =
+              successful.length === 0
+                ? 0
+                : successful.reduce((s, r) => s + r.overall, 0) /
+                  successful.length;
+            const failed = report.samples_total - report.samples_succeeded;
+            return (
+              <>
+                <div className="grid gap-4 sm:grid-cols-3 mb-4">
+                  <Card>
+                    <CardHeader className="pb-2">
+                      <CardDescription>
+                        Field accuracy (successful runs)
+                      </CardDescription>
+                      <CardTitle
+                        className={`text-3xl ${pctColor(successAcc)}`}
+                      >
+                        {fmtPct(successAcc)}
+                      </CardTitle>
+                    </CardHeader>
+                  </Card>
+                  <Card>
+                    <CardHeader className="pb-2">
+                      <CardDescription>Samples extracted</CardDescription>
+                      <CardTitle className="text-3xl">
+                        {report.samples_succeeded}
+                        <span className="text-base font-normal text-muted-foreground">
+                          {" "}
+                          / {report.samples_total}
+                        </span>
+                      </CardTitle>
+                    </CardHeader>
+                  </Card>
+                  <Card>
+                    <CardHeader className="pb-2">
+                      <CardDescription>Last run</CardDescription>
+                      <CardTitle className="text-sm font-mono">
+                        {new Date(report.run_at).toLocaleString()}
+                      </CardTitle>
+                    </CardHeader>
+                  </Card>
+                </div>
+                {failed > 0 && (
+                  <p className="text-xs text-muted-foreground mb-8 max-w-3xl">
+                    Headline accuracy is averaged across the{" "}
+                    {report.samples_succeeded} sample(s) where extraction
+                    succeeded end-to-end. {failed} sample(s) failed during this
+                    run — one from a genuine schema-retry dead-end on a
+                    deliberately ambiguous fixture, one from hitting the Gemini
+                    free-tier daily quota mid-run. Per-sample detail below.
+                  </p>
+                )}
+              </>
+            );
+          })()}
 
           <Card className="mb-8">
             <CardHeader className="pb-3">
